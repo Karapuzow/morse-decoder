@@ -39,26 +39,17 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-    let string = expr.toString(); 
-    let morseSymbol = '';
-    let result = '';
-     for (let i = 0; i < string.length; i = i + 10) {
-        for (let j = 0; j < 10; j = j + 2) {
-            if ((string[i + j] == '1') && (string[i + j + 1] == '0')) {
-                morseSymbol = `${morseSymbol}.`;
-            }
-            if ((string[i + j] == '1') && (string[i + j + 1] == '1')) {
-                morseSymbol = `${morseSymbol}-`;
-            }
-            if ((string[i + j] == '*') && (string[i + j + 1] == '*')) {
-                morseSymbol = `${morseSymbol}*`;
-            }
-        }
-        result = `${result}${MORSE_TABLE[morseSymbol]}`;
-        morseSymbol = '';
+    let result = ''
+    
+    morseCode = expr.replace(/00/g, '')
+        .replace(/10/g, '.')
+        .replace(/11/g, '-')
+        .replace(/\*\*\*\*\*\*\*\*\*\*/g, ' ')
+        .split(' ')
+    for (let num = 0; num < morseCode.length; num++) {
+        result = result + MORSE_TABLE[morseCode[num]]
     }
-
-    return result;
+    return result
 }
 
 module.exports = {
